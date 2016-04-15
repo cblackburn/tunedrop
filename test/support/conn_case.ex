@@ -26,6 +26,7 @@ defmodule Tunedrop.ConnCase do
       import Ecto.Query, only: [from: 1, from: 2]
 
       import Tunedrop.Router.Helpers
+      import Tunedrop.TestHelpers
 
       # The default endpoint for testing
       @endpoint Tunedrop.Endpoint

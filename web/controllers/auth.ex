@@ -1,5 +1,6 @@
-defmodule Tunedrop.ApiAuth do
+defmodule Tunedrop.Auth do
   import Plug.Conn
+  import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   import Phoenix.Controller
   alias Tunedrop.Router.Helpers
 

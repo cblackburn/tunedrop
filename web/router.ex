@@ -12,6 +12,7 @@ defmodule Tunedrop.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Tunedrop.ApiAuth, repo: Tunedrop.Repo
   end
 
   scope "/", Tunedrop do
