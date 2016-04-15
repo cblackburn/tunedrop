@@ -1,0 +1,4 @@
+<b>
+  <%= @tune.user.username %>
+  <%= @tune.artist %>
+</b>
