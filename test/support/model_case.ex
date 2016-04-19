@@ -21,6 +21,7 @@ defmodule Tunedrop.ModelCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
+      import Tunedrop.TestHelpers
       import Tunedrop.ModelCase
     end
   end

@@ -21,11 +21,12 @@ defmodule Tunedrop.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/tunes", TuneController, only: [:index]
   end
 
   # Other scopes may use custom stacks.
   scope "/api", Tunedrop do
-    pipe_through :api
+    pipe_through [:api, :authenticate_api]
 
     resources "/songs", SongController, only: [:index, :create, :show]
   end

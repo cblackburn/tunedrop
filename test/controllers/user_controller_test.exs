@@ -1,4 +1,3 @@
-require IEx
 defmodule Tunedrop.UserControllerTest do
   use Tunedrop.ConnCase
 

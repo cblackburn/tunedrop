@@ -19,7 +19,7 @@ defmodule Tunedrop.Mixfile do
   def application do
     [mod: {Tunedrop, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin]]
+                    :phoenix_ecto, :postgrex, :comeonin, :timex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,6 +39,8 @@ defmodule Tunedrop.Mixfile do
      {:cowboy, "~> 1.0"},
      {:cors_plug, "~> 1.1"},
      {:secure_random, "~> 0.2"},
+     {:timex, "~> 2.1"},
+     {:timex_ecto, "~> 1.0.4"},
      {:comeonin, "~> 2.0"}]
   end
 

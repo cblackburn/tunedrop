@@ -1,5 +1,6 @@
 defmodule Tunedrop.Song do
   use Tunedrop.Web, :model
+  use Timex
 
   schema "songs" do
     field :url, :string
@@ -23,5 +24,12 @@ defmodule Tunedrop.Song do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_number(:year, greater_than: 1800)
+    |> validate_number(:year, less_than: Date.today.year + 1)
+    |> assoc_constraint(:user)
+  end
+
+  def with_user(song) do
+    Tunedrop.Repo.preload(song, :user)
   end
 end

@@ -15,7 +15,8 @@ defmodule Tunedrop.TestHelpers do
 
   def insert_song(user, attrs \\ %{}) do
     user
-    |> Ecto.build_assoc(:song, attrs)
+    |> Ecto.build_assoc(:songs, attrs)
     |> Repo.insert!()
+    # |> Repo.preload([:user])
   end
 end
