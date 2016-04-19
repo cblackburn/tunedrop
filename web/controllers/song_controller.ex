@@ -5,13 +5,24 @@ defmodule Tunedrop.SongController do
 
   plug :scrub_params, "song" when action in [:create, :update]
 
-  def index(conn, _params) do
-    songs = Repo.all(Song)
+  def action(conn, _) do
+    apply(
+      __MODULE__,
+      action_name(conn),
+      [conn, conn.params, conn.assigns.current_user]
+    )
+  end
+
+  def index(conn, _params, user) do
+    songs = Song |> Repo.all |> Repo.preload(:user)
     render(conn, "index.json", songs: songs)
   end
 
-  def create(conn, %{"song" => song_params}) do
-    changeset = Song.changeset(%Song{}, song_params)
+  def create(conn, %{"song" => song_params}, user) do
+    changeset =
+      user
+      |> build_assoc(:songs)
+      |> Song.changeset(song_params)
 
     case Repo.insert(changeset) do
       {:ok, song} ->
@@ -26,32 +37,8 @@ defmodule Tunedrop.SongController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id}, user) do
     song = Repo.get!(Song, id)
     render(conn, "show.json", song: song)
-  end
-
-  def update(conn, %{"id" => id, "song" => song_params}) do
-    song = Repo.get!(Song, id)
-    changeset = Song.changeset(song, song_params)
-
-    case Repo.update(changeset) do
-      {:ok, song} ->
-        render(conn, "show.json", song: song)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Tunedrop.ChangesetView, "error.json", changeset: changeset)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    song = Repo.get!(Song, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(song)
-
-    send_resp(conn, :no_content, "")
   end
 end

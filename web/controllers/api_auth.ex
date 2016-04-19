@@ -8,7 +8,10 @@ defmodule Tunedrop.ApiAuth do
   end
 
   def call(conn, repo) do
-    {"x-api-key", api_key} = List.keyfind(conn.req_headers, "x-api-key", 0)
+    api_key = case List.keyfind(conn.req_headers, "x-api-key", 0) do
+      {"x-api-key", the_key} -> the_key
+      _ -> nil
+    end
 
     cond do
       user = conn.assigns[:current_user] ->
@@ -25,7 +28,7 @@ defmodule Tunedrop.ApiAuth do
       conn
     else
       conn
-      |> put_status(:unprocessable_entity)
+      |> put_status(:unauthorized)
       |> render(Tunedrop.ErrorView, "error.json")
       |> halt()
     end
