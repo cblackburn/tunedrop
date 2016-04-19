@@ -37,6 +37,7 @@ defmodule Tunedrop.Web do
       import Tunedrop.Router.Helpers
       import Tunedrop.Gettext
       import Tunedrop.Auth, only: [authenticate_user: 2]
+      import Tunedrop.ApiAuth, only: [authenticate_api: 2]
     end
   end
 
@@ -61,6 +62,7 @@ defmodule Tunedrop.Web do
       use Phoenix.Router
 
       import Tunedrop.Auth, only: [authenticate_user: 2]
+      import Tunedrop.ApiAuth, only: [authenticate_api: 2]
     end
   end
 

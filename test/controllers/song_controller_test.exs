@@ -6,7 +6,9 @@ defmodule Tunedrop.SongControllerTest do
   @invalid_attrs %{track: "bogus"}
 
   setup %{conn: conn} do
+    user = insert_user(username: "iamtheuser", password: "secret123")
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {:ok, conn: put_req_header(conn, "x-api-key", user.api_token)}
   end
 
   test "lists all entries on index", %{conn: conn} do
@@ -40,5 +42,11 @@ defmodule Tunedrop.SongControllerTest do
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, song_path(conn, :create), song: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
+  end
+
+  test "auth", %{conn: conn} do
+    conn = delete_req_header(conn, "x-api-key")
+    conn = post(conn, song_path(conn, :create), song: @valid_attrs)
+    assert json_response(conn, 401) != %{}
   end
 end

@@ -1,4 +1,7 @@
 <b>
   <%= @tune.user.username %>
   <%= @tune.artist %>
+  <%= @tune.track %>
+  <%= @tune.year %>
+  <%= @tune.inserted_at %>
 </b>

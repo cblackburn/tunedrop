@@ -26,7 +26,7 @@ defmodule Tunedrop.Router do
 
   # Other scopes may use custom stacks.
   scope "/api", Tunedrop do
-    pipe_through :api
+    pipe_through [:api, :authenticate_api]
 
     resources "/songs", SongController, only: [:index, :create, :show]
   end

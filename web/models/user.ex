@@ -7,20 +7,25 @@ defmodule Tunedrop.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     field :api_token, :string
+    has_many :songs, Tunedrop.Song
 
     timestamps
   end
 
   @required_fields ~w(username email)
+  @optional_fields ~w()
 
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, ~w(email username), [])
+    |> cast(params, @required_fields, @optional_fields)
     |> validate_length(:username, min: 5, max: 20)
     |> validate_length(:email, min: 6, max: 255)
     |> validate_format(:email, ~r/\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
   end
 
+  @doc """
+  password is required on create (registration)
+  """
   def registration_changeset(model, params \\ :empty) do
     model
     |> changeset(params)
@@ -30,6 +35,9 @@ defmodule Tunedrop.User do
     |> put_pass_hash()
   end
 
+  @doc """
+  generate, and persist the password hash
+  """
   defp put_pass_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
@@ -39,6 +47,9 @@ defmodule Tunedrop.User do
     end
   end
 
+  @doc """
+  generate, and persist the api_token
+  """
   defp put_api_token(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true} ->
