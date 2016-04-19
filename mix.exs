@@ -40,6 +40,7 @@ defmodule Tunedrop.Mixfile do
      {:cors_plug, "~> 1.1"},
      {:secure_random, "~> 0.2"},
      {:timex, "~> 2.1"},
+     {:timex_ecto, "~> 1.0.4"},
      {:comeonin, "~> 2.0"}]
   end
 
