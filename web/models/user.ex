@@ -35,9 +35,6 @@ defmodule Tunedrop.User do
     |> put_pass_hash()
   end
 
-  @doc """
-  generate, and persist the password hash
-  """
   defp put_pass_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
@@ -47,9 +44,6 @@ defmodule Tunedrop.User do
     end
   end
 
-  @doc """
-  generate, and persist the api_token
-  """
   defp put_api_token(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true} ->

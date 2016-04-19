@@ -1,3 +1,4 @@
+require IEx
 defmodule Tunedrop.SongTest do
   use Tunedrop.ModelCase
   use Timex
@@ -15,6 +16,13 @@ defmodule Tunedrop.SongTest do
   test "changeset with invalid attributes" do
     changeset = Song.changeset(%Song{}, @invalid_attrs)
     refute changeset.valid?
+  end
+
+  test "changeset with no user_id" do
+    attrs = Map.delete(@valid_attrs, :user_id)
+    changeset = Song.changeset(%Song{}, attrs)
+    assert {:user_id, "Cannot be nil"}
+        in changeset.errors
   end
 
   test "changeset with year too early" do
@@ -38,5 +46,34 @@ defmodule Tunedrop.SongTest do
     song = insert_song(user, attrs)
     song_with_user = Song.with_user(song)
     assert song_with_user.user.username
+  end
+
+  test "no duplicates" do
+    user = insert_user(username: "iamtheuser", password: "secret123")
+    attrs = Map.put(@valid_attrs, :user_id, user.id)
+    insert_song(user, attrs)
+    changeset = Song.changeset(%Song{}, attrs)
+    assert {:song, "You already posted that"}
+        in changeset.errors
+  end
+
+  test "duplicate_post within 5 minutes" do
+    user = insert_user(username: "iamtheuser", password: "secret123")
+    attrs = Map.put(@valid_attrs, :user_id, user.id)
+    insert_song(user, attrs)
+    changeset = Song.changeset(%Song{}, attrs)
+    dup = Song.duplicate_post(changeset, user.id)
+    assert dup
+  end
+
+  test "no duplicate_post after 5 minutes" do
+    user = insert_user(username: "iamtheuser", password: "secret123")
+    attrs = Map.put(@valid_attrs, :user_id, user.id)
+    new_time = DateTime.now |> Timex.add(Time.to_timestamp(-6, :minutes))
+    attrs = Map.put_new(attrs, :inserted_at, new_time)
+    insert_song(user, attrs)
+    changeset = Song.changeset(%Song{}, attrs)
+    dup = Song.duplicate_post(changeset, user.id)
+    refute dup
   end
 end

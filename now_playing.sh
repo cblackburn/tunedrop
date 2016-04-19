@@ -15,7 +15,7 @@ status() {
 }
 
 post_song() {
-  curl -X "POST" "http://localhost:4000/api/songs" \
+  curl -X "POST" "https://songdrop.herokuapp.com/api/songs" \
   	-H "Content-Type: application/json" \
   	-H "x-api-key: $TUNEDROP_API_KEY" \
   	-H "Accept: application/json" \
