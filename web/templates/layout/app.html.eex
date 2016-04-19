@@ -26,7 +26,7 @@
             <li><%= link "Log in", to: session_path(@conn, :new) %></li>
           <% end %>
         </ol>
-        <span class="logo"></span>
+        <span class="logo">Tunedrop on Phoenix!</span>
       </div>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
@@ -35,6 +35,8 @@
       <%= render @view_module, @view_template, assigns %>
 
     </div> <!-- /container -->
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script>window.userToken = "<%= assigns[:user_token] %>";</script>
   </body>
 </html>

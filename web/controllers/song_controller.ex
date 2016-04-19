@@ -29,6 +29,7 @@ defmodule Tunedrop.SongController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", song_path(conn, :show, song))
+        |> Tunedrop.RoomChannel.broadcast_new_tune(Repo.preload(song, :user))
         |> render("show.json", song: song)
       {:error, changeset} ->
         conn

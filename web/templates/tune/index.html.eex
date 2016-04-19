@@ -1,9 +1,7 @@
 <h1>Listing Tunes</h1>
 
-<table class="table">
+<ul id="tunes">
   <%= for tune <- @tunes do %>
-    <tr>
-      <td><%= render "tune.html", tune: tune %></td>
-    </tr>
+    <li><%= render "tune.html", tune: tune %></li>
   <% end %>
-</table>
+</ul>

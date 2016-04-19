@@ -28,4 +28,8 @@ defmodule Tunedrop.Song do
     |> validate_number(:year, less_than: Date.today.year + 1)
     |> assoc_constraint(:user)
   end
+
+  def with_user(song) do
+    Tunedrop.Repo.preload(song, :user)
+  end
 end

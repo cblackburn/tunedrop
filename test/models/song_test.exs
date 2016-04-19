@@ -4,7 +4,7 @@ defmodule Tunedrop.SongTest do
 
   alias Tunedrop.Song
 
-  @valid_attrs %{artist: "ELO", track: "Strange Magic", year: "1975", user_id: 1}
+  @valid_attrs %{artist: "ELO", track: "Strange Magic", year: 1975, user_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
@@ -30,5 +30,13 @@ defmodule Tunedrop.SongTest do
     changeset = Song.changeset(%Song{}, attrs)
     assert {:year, {"must be less than %{count}", [count: year]}}
         in changeset.errors
+  end
+
+  test "with_user" do
+    user = insert_user(username: "iamtheuser", password: "secret123")
+    attrs = Map.put(@valid_attrs, :user_id, user.id)
+    song = insert_song(user, attrs)
+    song_with_user = Song.with_user(song)
+    assert song_with_user.user.username
   end
 end
