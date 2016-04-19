@@ -21,8 +21,8 @@ config :tunedrop, Tunedrop.Endpoint,
 # Configure your database
 config :tunedrop, Tunedrop.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL")
-  pool_size: 20
+  url: System.get_env("DATABASE_URL"),
+  pool_size: 20,
   ssl: true
 
 # Do not print debug messages in production
