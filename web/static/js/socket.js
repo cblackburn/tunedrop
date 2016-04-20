@@ -64,11 +64,11 @@ channel.on("new_tune", payload => {
   console.log("new_tune:", payload);
   console.log("inserted_at:", payload["inserted_at"]);
   var newRow = "<li>@" +
-      payload["username"] + " &raquo; " +
+      payload["username"] + " &deg; " +
+      payload["inserted_at"] + " &raquo; " +
       payload["artist"] + " &middot; " +
-      payload["track"] + " &middot;" +
-      payload["year"] + " &deg; " +
-      payload["inserted_at"] + " " +
+      payload["track"] + " &middot; " +
+      payload["year"] +
       "</li>";
   tunesContainer.append(`${newRow}`)
 })
