@@ -12,7 +12,7 @@ defmodule Tunedrop.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Repo.get(User, id)
-    render(conn, "show.html", user: user)
+    render(conn, "show.html", user: user, conn: conn)
   end
 
   def new(conn, _params) do

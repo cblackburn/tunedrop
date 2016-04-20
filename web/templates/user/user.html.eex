@@ -1,1 +1,1 @@
-<b><%= first_name(@user) %></b> (<%= @user.id %>, api_token: <%= @user.api_token %>)
+<b><%= first_name(@user) %></b> <%= display_token(@conn, @user) %>
