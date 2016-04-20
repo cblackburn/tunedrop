@@ -1,20 +1,16 @@
 # Tunedrop
 
-To start your Phoenix app:
+Find out what music others are listening to and post tunes as well.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
+[Tunedrop](https://songdrop.herokuapp.com/tunes) runs on [Phoenix](http://www.phoenixframework.org/), the [Elixir](http://elixir-lang.org/) framework, and is hosted for free on [Heroku](https://songdrop.herokuapp.com/tunes).
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+I built Tunedrop for two reasons:
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+1. To learn Phoenix and Elixir
+2. To bring the joy of the music I grew up with to to my daughters
 
-## Learn more
+Anyone can eavesdrop on the music, but to post what you are listening to, you have to register.
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: http://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+After you register you can use your API token to post what's playing in iTunes using [this script](https://github.com/cblackburn/tunedrop/blob/master/now_playing.sh), if you are running on a Mac. I'm working on a launch daemon to have it post automatically, but until that is released you have to run the script manually.
+
+Feel free to [send me feedback](mailto:e7d2582b@opayq.com)
