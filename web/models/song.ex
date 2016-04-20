@@ -31,7 +31,6 @@ defmodule Tunedrop.Song do
     |> cast(params, @required_fields, @optional_fields)
     |> validate_number(:year, greater_than: 1800)
     |> validate_number(:year, less_than: Date.today.year + 1)
-    |> validate_not_duplicate(params)
     |> assoc_constraint(:user)
   end
 
@@ -51,13 +50,13 @@ defmodule Tunedrop.Song do
     |> Repo.one()
   end
 
-  defp validate_not_duplicate(changeset, %{user_id: user_id}) do
-    case duplicate_post(changeset, user_id) do
-      nil -> changeset
-      _ -> add_error(changeset, :song, "You already posted that")
-    end
-  end
-  defp validate_not_duplicate(changeset, %{}) do
-    add_error(changeset, :user_id, "Cannot be nil")
-  end
+  # defp validate_not_duplicate(changeset, %{user_id: user_id}) do
+  #   case duplicate_post(changeset, user_id) do
+  #     nil -> changeset
+  #     _ -> add_error(changeset, :song, "You already posted that")
+  #   end
+  # end
+  # defp validate_not_duplicate(changeset, %{}) do
+  #   add_error(changeset, :user_id, "Cannot be nil")
+  # end
 end

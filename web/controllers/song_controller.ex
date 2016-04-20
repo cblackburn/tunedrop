@@ -1,3 +1,4 @@
+require IEx
 defmodule Tunedrop.SongController do
   use Tunedrop.Web, :controller
 
@@ -22,7 +23,7 @@ defmodule Tunedrop.SongController do
     changeset =
       user
       |> build_assoc(:songs)
-      |> Song.changeset(song_params)
+      |> Song.changeset(Map.put(song_params, "user_id", user.id))
 
     case Repo.insert(changeset) do
       {:ok, song} ->
