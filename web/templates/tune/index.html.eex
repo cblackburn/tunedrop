@@ -1,7 +1,0 @@
-<h1>Listing Tunes</h1>
-
-<ul id="tunes">
-  <%= for tune <- @tunes do %>
-    <li><%= render "tune.html", tune: tune %></li>
-  <% end %>
-</ul>

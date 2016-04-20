@@ -1,0 +1,5 @@
+%h1 Who's Listing to What...
+
+%ul#tunes
+  - for tune <- @tunes do
+    = render("_tune.html", tune: tune)

@@ -1,5 +1,0 @@
-@<%= @tune.user.username %> &raquo;
-<%= @tune.artist %> &middot;
-<%= @tune.track %> &middot;
-<%= @tune.year %> &deg;
-<%= listened_at(@tune) %>

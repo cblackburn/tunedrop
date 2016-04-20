@@ -18,7 +18,9 @@ defmodule Tunedrop.Router do
   scope "/", Tunedrop do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", TuneController, :index
+    get "/welcome", PageController, :index
+
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/tunes", TuneController, only: [:index]

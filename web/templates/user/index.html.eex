@@ -5,7 +5,7 @@
     <tr>
       <td>
         <strong>
-          <%= first_name(user) %>
+          <%= display_name(user) %>
         </strong>
       </td>
       <td><%= link "View", to: user_path(@conn, :show, user.id) %></td>

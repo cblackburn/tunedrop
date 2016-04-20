@@ -1,0 +1,34 @@
+.jumbotron
+  %h2 Welcome to Tunedrop!
+  %p.lead
+    = link("Tune in", to: tune_path(@conn, :index))
+    = "- and find out what others are listening to..."
+
+%p
+  Tunedrop runs on
+  %a{href: "http://www.phoenixframework.org/"}
+    Phoenix
+  , the
+  %a{href: "http://elixir-lang.org/"}
+    Elixir
+  framework.
+
+%p
+  I built it for two reasons:
+  %ol
+    %li To learn Phoenix and Elixir
+    %li To bring the joy of music I grew up with to to my daughters
+
+%p
+  Anyone can eavesdrop on the music, but to post what you are listening to, you have to
+  = link("register", to: user_path(@conn, :new))
+
+%p
+  After you register you can use your API token to post what's playing in iTunes using
+  = link("this script", to: "https://github.com/cblackburn/tunedrop/blob/master/now_playing.sh", target: "_blank")
+  , if you are running on a Mac. I'm working on a launch daemon to have it post automatically, but until that is released you have to run the script manually.
+
+%p
+  Feel free to
+  %a{href: "mailto:e7d2582b@opayq.com"}
+    send me feedback

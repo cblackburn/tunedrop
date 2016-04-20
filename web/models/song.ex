@@ -54,7 +54,7 @@ defmodule Tunedrop.Song do
   defp validate_not_duplicate(changeset, %{user_id: user_id}) do
     case duplicate_post(changeset, user_id) do
       nil -> changeset
-      song -> add_error(changeset, :song, "You already posted that")
+      _ -> add_error(changeset, :song, "You already posted that")
     end
   end
   defp validate_not_duplicate(changeset, %{}) do

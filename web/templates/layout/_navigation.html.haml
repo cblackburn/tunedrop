@@ -1,0 +1,23 @@
+%ul.breadcrumb.text-right
+  - if @current_user do
+    %li
+      = link(display_name(@current_user), to: user_path(@conn, :show, @current_user))
+    %li
+      = link("Help", to: page_path(@conn, :index))
+    %li
+      = link("Tunes", to: tune_path(@conn, :index))
+    %li
+      = link("Users", to: user_path(@conn, :index))
+    %li
+      = link("Log out", to: session_path(@conn, :delete, @current_user), method: "delete")
+  - else
+    %li
+      = display_name(@current_user)
+    %li
+      = link("Help", to: page_path(@conn, :index))
+    %li
+      = link("Tunes", to: tune_path(@conn, :index))
+    %li
+      = link("Register", to: user_path(@conn, :new))
+    %li
+      = link("Log in", to: session_path(@conn, :new))

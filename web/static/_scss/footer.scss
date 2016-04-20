@@ -1,0 +1,32 @@
+.footer {
+  background-color: #f7f7f7;
+  font-size: 85%;
+  margin-top: 4rem;
+  padding: 4rem 0;
+  text-align: center;
+}
+.footer a {
+  color: #55595c;
+  font-weight: 500;
+}
+.footer a:hover {
+  color: #0275d8;
+}
+.footer p {
+  margin-bottom: 0;
+}
+@media (min-width: 544px) {
+  .footer {
+    text-align: left;
+  }
+}
+.footer-links {
+  margin-bottom: 1rem;
+  padding-left: 0;
+}
+.footer-links li {
+  display: inline-block;
+}
+.footer-links li + li {
+  margin-left: 1rem;
+}
