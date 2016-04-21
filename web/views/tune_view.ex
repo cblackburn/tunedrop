@@ -37,16 +37,22 @@ defmodule Tunedrop.TuneView do
     end
   end
 
-  defp youtube_url(%{artist: artist, track: track}) do
-    artist = URI.encode(artist)
-    track = URI.encode(track)
+  def youtube_url(%{artist: artist, track: track}) do
+    artist = encode(artist)
+    track = encode(track)
     "https://www.youtube.com/results?search_query=#{artist}+#{track}"
   end
 
-  defp amazon_url(%{artist: artist, track: track}) do
+  def amazon_url(%{artist: artist, track: track}) do
     #"http://www.amazon.com/gp/search?ie=UTF8&camp=1789&creative=9325&index=aps&keywords=tony+robbins&linkCode=ur2&tag=YOUR-ID-20"
-    artist = URI.encode(artist)
-    track = URI.encode(track)
+    artist = encode(artist)
+    track = encode(track)
     "http://www.amazon.com/s/ref=as_li_ss_tl?url=search-alias%3Daps&field-keywords=#{artist}+-+#{track}&rh=i%3Aaps%2Ck%3A#{artist}+-+#{track}&linkCode=ll2&tag=midwirtechno-20"
+  end
+
+  defp encode(string) do
+    string
+    |> String.replace(" ", "+")
+    |> String.replace("&", "%26")
   end
 end
