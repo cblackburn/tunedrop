@@ -61,6 +61,7 @@ let channel = socket.channel("rooms:lobby", {})
 let tunesContainer = $("#tunes")
 
 channel.on("new_tune", payload => {
+  console.log("Received", payload);
   var newRow = payload["content"];
   tunesContainer.append(`${newRow}`)
 })

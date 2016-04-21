@@ -39,13 +39,13 @@ defmodule Tunedrop.Song do
     Repo.preload(song, :user)
   end
 
-  def validate_unique(changeset, params = %{artist: artist, track: track, year: year, user_id: user_id}) do
+  def validate_unique(changeset, params = %{artist: _artist, track: _track, year: _year, user_id: _user_id}) do
     case duplicate_post(params) do
       nil -> changeset
       _ -> add_error(changeset, :song, "You already posted that")
     end
   end
-  def validate_unique(changeset, params = %{"artist" => artist, "track" => track, "year" => year, "user_id" => user_id}) do
+  def validate_unique(changeset, %{"artist" => artist, "track" => track, "year" => year, "user_id" => user_id}) do
     validate_unique(changeset, %{artist: artist, track: track, year: year, user_id: user_id})
   end
   def validate_unique(changeset, _params) do
@@ -64,6 +64,6 @@ defmodule Tunedrop.Song do
     |> Repo.one()
   end
   def duplicate_post(%{"artist" => artist, "track" => track, "year" => year, "user_id" => user_id}) do
-    duplicate_post(%{artist: artist, track: track, year: year})
+    duplicate_post(%{artist: artist, track: track, year: year, user_id: user_id})
   end
 end

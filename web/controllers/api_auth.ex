@@ -1,7 +1,6 @@
 defmodule Tunedrop.ApiAuth do
   import Plug.Conn
   import Phoenix.Controller
-  alias Tunedrop.Router.Helpers
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)

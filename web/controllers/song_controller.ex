@@ -13,7 +13,7 @@ defmodule Tunedrop.SongController do
     )
   end
 
-  def index(conn, _params, user) do
+  def index(conn, _params, _user) do
     songs = Song |> Repo.all |> Repo.preload(:user)
     render(conn, "index.json", songs: songs)
   end
@@ -38,7 +38,7 @@ defmodule Tunedrop.SongController do
     end
   end
 
-  def show(conn, %{"id" => id}, user) do
+  def show(conn, %{"id" => id}, _user) do
     song = Repo.get!(Song, id)
     render(conn, "show.json", song: song)
   end
