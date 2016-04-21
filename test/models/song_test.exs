@@ -53,7 +53,6 @@ defmodule Tunedrop.SongTest do
     user = insert_user(username: "iamtheuser", password: "secret123")
     attrs = Map.put(@valid_attrs, :user_id, user.id)
     insert_song(user, attrs)
-    changeset = Song.changeset(%Song{}, attrs)
     dup = Song.duplicate_post(attrs)
     assert dup
   end

@@ -17,11 +17,7 @@ defmodule Tunedrop.RoomChannel do
 
   def broadcast_new_tune(conn, song) do
     payload = %{
-      "username" => song.user.username,
-      "artist" => song.artist,
-      "track" => song.track,
-      "year" => song.year,
-      "inserted_at" => javascript_datetime(song.inserted_at)
+      "content" => Tunedrop.TuneView.tune_link(song) |> Phoenix.HTML.safe_to_string
     }
     Tunedrop.Endpoint.broadcast!("rooms:lobby", "new_tune", payload)
     conn

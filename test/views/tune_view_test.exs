@@ -1,7 +1,9 @@
 defmodule Tunedrop.TuneViewTest do
   use Tunedrop.ConnCase, async: true
 
-  # Bring render/3 and render_to_string/3 for testing custom views
-  # import Phoenix.View
-
+  # test "returns icon tags" do
+  #   Tunedrop.TuneView.icons_for(
+  #     %Tunedrop.Song{artist: "ELO", track: "Strange Magic", year: 1975}
+  #   ) |> Phoenix.HTML.safe_to_string
+  # end
 end

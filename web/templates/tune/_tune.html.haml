@@ -1,10 +1,1 @@
-%li
-  = "@#{@tune.user.username}"
-  &deg;
-  = listened_at(@tune)
-  &raquo;
-  = @tune.artist
-  &middot;
-  = @tune.track
-  &middot;
-  = @tune.year
+= tune_link(@tune)
