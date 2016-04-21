@@ -1,4 +1,3 @@
-require IEx
 defmodule Tunedrop.SongTest do
   use Tunedrop.ModelCase
   use Timex
@@ -16,13 +15,6 @@ defmodule Tunedrop.SongTest do
   test "changeset with invalid attributes" do
     changeset = Song.changeset(%Song{}, @invalid_attrs)
     refute changeset.valid?
-  end
-
-  test "changeset with no user_id" do
-    attrs = Map.delete(@valid_attrs, :user_id)
-    changeset = Song.changeset(%Song{}, attrs)
-    assert {:user_id, "Cannot be nil"}
-        in changeset.errors
   end
 
   test "changeset with year too early" do
@@ -62,7 +54,7 @@ defmodule Tunedrop.SongTest do
     attrs = Map.put(@valid_attrs, :user_id, user.id)
     insert_song(user, attrs)
     changeset = Song.changeset(%Song{}, attrs)
-    dup = Song.duplicate_post(changeset, user.id)
+    dup = Song.duplicate_post(attrs)
     assert dup
   end
 
@@ -70,10 +62,8 @@ defmodule Tunedrop.SongTest do
     user = insert_user(username: "iamtheuser", password: "secret123")
     attrs = Map.put(@valid_attrs, :user_id, user.id)
     new_time = DateTime.now |> Timex.add(Time.to_timestamp(-6, :minutes))
-    attrs = Map.put_new(attrs, :inserted_at, new_time)
-    insert_song(user, attrs)
-    changeset = Song.changeset(%Song{}, attrs)
-    dup = Song.duplicate_post(changeset, user.id)
+    insert_song(user, Map.put_new(attrs, :inserted_at, new_time))
+    dup = Song.duplicate_post(attrs)
     refute dup
   end
 end

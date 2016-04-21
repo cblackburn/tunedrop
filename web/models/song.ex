@@ -31,6 +31,7 @@ defmodule Tunedrop.Song do
     |> cast(params, @required_fields, @optional_fields)
     |> validate_number(:year, greater_than: 1800)
     |> validate_number(:year, less_than: Date.today.year + 1)
+    |> validate_unique(params)
     |> assoc_constraint(:user)
   end
 
@@ -38,25 +39,31 @@ defmodule Tunedrop.Song do
     Repo.preload(song, :user)
   end
 
-  def duplicate_post(changeset, user_id) do
+  def validate_unique(changeset, params = %{artist: artist, track: track, year: year, user_id: user_id}) do
+    case duplicate_post(params) do
+      nil -> changeset
+      _ -> add_error(changeset, :song, "You already posted that")
+    end
+  end
+  def validate_unique(changeset, params = %{"artist" => artist, "track" => track, "year" => year, "user_id" => user_id}) do
+    validate_unique(changeset, %{artist: artist, track: track, year: year, user_id: user_id})
+  end
+  def validate_unique(changeset, _params) do
+    changeset
+  end
+
+  def duplicate_post(%{artist: artist, track: track, year: year, user_id: user_id}) do
     Song
     |> where([s], s.inserted_at > datetime_add(^Ecto.DateTime.utc, -5, "minute"))
-    |> where([s], s.artist == ^get_field(changeset, :artist))
-    |> where([s], s.track == ^get_field(changeset, :track))
-    |> where([s], s.year == ^get_field(changeset, :year))
+    |> where([s], s.artist == ^artist)
+    |> where([s], s.track == ^track)
+    |> where([s], s.year == ^year)
     |> where([s], s.user_id == ^user_id)
     |> order_by([s], desc: s.inserted_at)
     |> limit(1)
     |> Repo.one()
   end
-
-  # defp validate_not_duplicate(changeset, %{user_id: user_id}) do
-  #   case duplicate_post(changeset, user_id) do
-  #     nil -> changeset
-  #     _ -> add_error(changeset, :song, "You already posted that")
-  #   end
-  # end
-  # defp validate_not_duplicate(changeset, %{}) do
-  #   add_error(changeset, :user_id, "Cannot be nil")
-  # end
+  def duplicate_post(%{"artist" => artist, "track" => track, "year" => year, "user_id" => user_id}) do
+    duplicate_post(%{artist: artist, track: track, year: year})
+  end
 end

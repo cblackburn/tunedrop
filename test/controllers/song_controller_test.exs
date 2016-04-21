@@ -1,8 +1,9 @@
 defmodule Tunedrop.SongControllerTest do
   use Tunedrop.ConnCase
   alias Tunedrop.Song
+  alias Tunedrop.User
 
-  @valid_attrs %{artist: "Pilot", track: "Magic", year: "1967"}
+  @valid_attrs %{artist: "Pilot", track: "Magic", year: 1967}
   @invalid_attrs %{track: "bogus"}
 
   setup %{conn: conn} do
@@ -41,6 +42,14 @@ defmodule Tunedrop.SongControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, song_path(conn, :create), song: @invalid_attrs
+    assert json_response(conn, 422)["errors"] != %{}
+  end
+
+  test "does not create resource and renders errors when duplicate", %{conn: conn} do
+    user = Repo.get_by(User, username: "iamtheuser")
+    attrs = Map.put(@valid_attrs, :user_id, user.id)
+    insert_song(user, attrs)
+    conn = post conn, song_path(conn, :create), song: @valid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end
 

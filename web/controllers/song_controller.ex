@@ -1,4 +1,3 @@
-require IEx
 defmodule Tunedrop.SongController do
   use Tunedrop.Web, :controller
 

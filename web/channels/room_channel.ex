@@ -1,4 +1,3 @@
-require IEx
 defmodule Tunedrop.RoomChannel do
   use Phoenix.Channel
   use Timex
