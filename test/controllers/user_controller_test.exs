@@ -1,6 +1,5 @@
 defmodule Tunedrop.UserControllerTest do
   use Tunedrop.ConnCase
-
   alias Tunedrop.User
 
   @valid_attrs %{email: "user1@example.com", username: "boogadie", password: "asdfasdf"}

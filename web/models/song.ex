@@ -54,7 +54,7 @@ defmodule Tunedrop.Song do
 
   def duplicate_post(%{artist: artist, track: track, year: year, user_id: user_id}) do
     Song
-    |> where([s], s.inserted_at > datetime_add(^Ecto.DateTime.utc, -5, "minute"))
+    |> where([s], s.inserted_at > datetime_add(^Ecto.DateTime.utc, -10, "minute"))
     |> where([s], s.artist == ^artist)
     |> where([s], s.track == ^track)
     |> where([s], s.year == ^year)

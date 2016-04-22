@@ -2,4 +2,4 @@
 
 %ul#tunes
   - for tune <- @tunes do
-    = render("_tune.html", tune: tune)
+    = render("_tune.html", tune: tune, conn: @conn)

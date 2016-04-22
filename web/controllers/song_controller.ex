@@ -1,6 +1,5 @@
 defmodule Tunedrop.SongController do
   use Tunedrop.Web, :controller
-
   alias Tunedrop.Song
 
   plug :scrub_params, "song" when action in [:create, :update]

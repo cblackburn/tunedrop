@@ -17,7 +17,7 @@ defmodule Tunedrop.RoomChannel do
 
   def broadcast_new_tune(conn, song) do
     payload = %{
-      "content" => Tunedrop.TuneView.tune_link(song) |> Phoenix.HTML.safe_to_string
+      "content" => Tunedrop.TuneView.tune_link(conn, song) |> Phoenix.HTML.safe_to_string
     }
     Tunedrop.Endpoint.broadcast!("rooms:lobby", "new_tune", payload)
     conn

@@ -24,6 +24,7 @@ defmodule Tunedrop.Router do
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/tunes", TuneController, only: [:index]
+    resources "/spotify", SpotifyController, only: [:show]
   end
 
   # Other scopes may use custom stacks.

@@ -7,7 +7,7 @@ defmodule Tunedrop.TuneView do
   alias Phoenix.HTML.Tag
   alias Phoenix.HTML.Link
 
-  def tune_link(tune) do
+  def tune_link(conn, tune) do
     Tag.content_tag(:li, class: "track-item") do
       [
         "@#{tune.user.username}" <> " ° " <>
@@ -16,7 +16,8 @@ defmodule Tunedrop.TuneView do
         tune.track <> " · " <>
         "#{tune.year} ",
         Tunedrop.TuneView.youtube_icon_for(tune),
-        Tunedrop.TuneView.amazon_icon_for(tune)
+        Tunedrop.TuneView.amazon_icon_for(tune),
+        Tunedrop.TuneView.spotify_icon_for(conn, tune)
       ]
     end
   end
@@ -26,14 +27,20 @@ defmodule Tunedrop.TuneView do
   end
 
   def youtube_icon_for(tune) do
-    Link.link(to: youtube_url(tune), target: "_tunedrop") do
+    Link.link(to: youtube_url(tune), target: "_tunedrop", title: "Find on Youtube.") do
       Tag.tag(:img, class: "track-icon", src: "/images/yt.png")
     end
   end
 
   def amazon_icon_for(tune) do
-    Link.link(to: amazon_url(tune), target: "_tunedrop") do
+    Link.link(to: amazon_url(tune), target: "_tunedrop", title: "Buy mp3 on Amazon.") do
       Tag.tag(:img, class: "track-icon", src: "/images/az.png")
+    end
+  end
+
+  def spotify_icon_for(conn, tune) do
+    Link.link(to: spotify_path(conn, :show, tune), target: "_tunedrop", title: "Listen on Spotify") do
+      Tag.tag(:img, class: "track-icon", src: "/images/sp.png")
     end
   end
 

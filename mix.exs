@@ -17,9 +17,13 @@ defmodule Tunedrop.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Tunedrop, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin, :timex]]
+    [
+      mod: {Tunedrop, []},
+      applications: [
+        :phoenix, :phoenix_html, :cowboy, :logger, :gettext,
+        :phoenix_ecto, :postgrex, :comeonin, :timex, :httpotion
+      ]
+    ]
   end
 
   # Specifies which paths to compile per environment.
@@ -42,6 +46,7 @@ defmodule Tunedrop.Mixfile do
      {:timex, "~> 2.1"},
      {:timex_ecto, "~> 1.0.4"},
      {:phoenix_haml, "~> 0.2.1"},
+     {:httpotion, "~> 2.2.0"},
      {:comeonin, "~> 2.0"}]
   end
 
