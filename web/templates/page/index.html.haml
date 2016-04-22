@@ -17,16 +17,40 @@
   I built it for two reasons:
   %ol
     %li To learn Phoenix and Elixir
-    %li To bring the joy of music I grew up with to to my daughters
+    %li To bring the joy of music I grew up with to my daughters
 
 %p
   Anyone can eavesdrop on the music, but to post what you are listening to, you have to
   = link("register", to: user_path(@conn, :new))
 
 %p
+  Click on the icons next to each song:
+
+  %ul
+    %li
+      = tag(:img, class: "track-icon", src: "/images/yt.png")
+      to find the song or music-video on Youtube.
+    %li
+      = tag(:img, class: "track-icon", src: "/images/az.png")
+      to buy the song on Amazon (DRM free).
+    %li
+      = tag(:img, class: "track-icon", src: "/images/sp.png")
+      to listen to the song on Spotify for free (must have an account).
+
+%p
   After you register you can use your API token to post what's playing in iTunes using
   = link("this script", to: "https://github.com/cblackburn/tunedrop/blob/master/now_playing.sh", target: "_blank")
   , if you are running on a Mac. I'm working on a launch daemon to have it post automatically, but until that is released you have to run the script manually.
+
+%h3 Coming Soon
+
+%ul
+  %li
+    Ability to filter on a specific user.
+  %li
+    Registered uses will be able to add their Amazon Associates ID to get credit for users who click, and buy the mp3 on Amazon.
+  %li
+    A customized Launch Agent for Mac (OSX) users that will automatically post what you play in iTunes (I'm testing this now)
 
 %p
   Feel free to
