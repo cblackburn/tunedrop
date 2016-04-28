@@ -2,6 +2,12 @@ defmodule Tunedrop.TimeHelpersTest do
   use Tunedrop.ViewHelperCase
   use Timex
 
+  test "returns time in words for now" do
+    time = DateTime.now
+    words = Tunedrop.TimeHelpers.distance_of_time_in_words(time)
+    assert words =~ ~r/Less than 1 minute/
+  end
+
   test "returns time in words for 30 minutes" do
     time = DateTime.shift(DateTime.now, minutes: 30)
     words = Tunedrop.TimeHelpers.distance_of_time_in_words(time)
@@ -44,10 +50,10 @@ defmodule Tunedrop.TimeHelpersTest do
     assert words =~ ~r/about 2 days/
   end
 
-  test "returns time in words for 86400 minutes" do
-    time = DateTime.shift(DateTime.now, minutes: 86400)
+  test "returns time in words for 43201 minutes" do
+    time = DateTime.shift(DateTime.now, minutes: 43201)
     words = Tunedrop.TimeHelpers.distance_of_time_in_words(time)
-    assert words =~ ~r/about 2 months/
+    assert words =~ ~r/about 1 months/
   end
 
   test "returns time in words for 86400 minutes" do
