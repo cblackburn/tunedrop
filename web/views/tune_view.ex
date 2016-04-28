@@ -6,12 +6,14 @@ defmodule Tunedrop.TuneView do
   alias Tunedrop.Song
   alias Phoenix.HTML.Tag
   alias Phoenix.HTML.Link
+  alias Tunedrop.TimeHelpers
 
   def tune_link(conn, tune) do
     Tag.content_tag(:li, class: "track-item") do
       [
-        "@#{tune.user.username}" <> " ° " <>
-        listened_at(tune) <> " » " <>
+        "@#{tune.user.username}" <> " ° ",
+        time_ago(tune),
+        " » " <>
         tune.artist <> " · " <>
         tune.track <> " · " <>
         "#{tune.year} ",
@@ -23,7 +25,13 @@ defmodule Tunedrop.TuneView do
   end
 
   def listened_at(%Song{inserted_at: inserted_at}) do
-    Timex.Format.DateTime.Formatter.format!(inserted_at, "%m/%d %H:%M", :strftime)
+    Timex.Format.DateTime.Formatter.format!(inserted_at, "%B %d @ %H:%M UTC", :strftime)
+  end
+
+  def time_ago(%Song{inserted_at: inserted_at}) do
+    Tag.content_tag(:span, class: "time-ago", title: listened_at(%Song{inserted_at: inserted_at})) do
+      TimeHelpers.distance_of_time_in_words(inserted_at) <> " ago"
+    end
   end
 
   def youtube_icon_for(tune) do

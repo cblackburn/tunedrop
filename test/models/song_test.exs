@@ -49,7 +49,7 @@ defmodule Tunedrop.SongTest do
         in changeset.errors
   end
 
-  test "duplicate_post within 5 minutes" do
+  test "duplicate_post within 10 minutes" do
     user = insert_user(username: "iamtheuser", password: "secret123")
     attrs = Map.put(@valid_attrs, :user_id, user.id)
     insert_song(user, attrs)
@@ -57,10 +57,10 @@ defmodule Tunedrop.SongTest do
     assert dup
   end
 
-  test "no duplicate_post after 5 minutes" do
+  test "no duplicate_post after 10 minutes" do
     user = insert_user(username: "iamtheuser", password: "secret123")
     attrs = Map.put(@valid_attrs, :user_id, user.id)
-    new_time = DateTime.now |> Timex.add(Time.to_timestamp(-6, :minutes))
+    new_time = DateTime.now |> Timex.add(Time.to_timestamp(-11, :minutes))
     insert_song(user, Map.put_new(attrs, :inserted_at, new_time))
     dup = Song.duplicate_post(attrs)
     refute dup

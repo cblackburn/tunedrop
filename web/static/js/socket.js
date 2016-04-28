@@ -3,12 +3,12 @@
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/my_app/endpoint.ex":
-import {Socket} from "phoenix"
+import {Socket} from "phoenix";
 
 let socket = new Socket("/socket", {
   params: {token: window.userToken},
   logger: (kind, msg, data) => { console.log(`${kind}: ${msg}`, data) }
-})
+});
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -54,20 +54,26 @@ let socket = new Socket("/socket", {
 // Finally, pass the token on connect as below. Or remove it
 // from connect if you don't care about authentication.
 
-socket.connect()
+socket.connect();
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("rooms:lobby", {})
-let tunesContainer = $("#tunes")
+let channel = socket.channel("rooms:lobby", {});
+let tunesContainer = $("#tunes");
 
 channel.on("new_tune", payload => {
-  console.log("Received", payload);
+  console.log("Received:", payload);
+  var tunes = $('.track-item');
+  var tuneCount = tunes.length;
+  console.log("Tune Count:", tuneCount);
   var newRow = payload["content"];
-  tunesContainer.append(`${newRow}`)
+  tunesContainer.prepend(`${newRow}`);
+  if (tuneCount > 99) {
+    tunes.last().remove();
+  }
 })
 
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
 
-export default socket
+export default socket;
