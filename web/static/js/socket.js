@@ -7,7 +7,7 @@ import {Socket} from "phoenix";
 
 let socket = new Socket("/socket", {
   params: {token: window.userToken},
-  logger: (kind, msg, data) => { console.log(`${kind}: ${msg}`, data) }
+  logger: (kind, msg, data) => { console.log(`${kind}: ${msg}`, data); }
 });
 
 // When you connect, you'll often need to authenticate the client.
@@ -60,20 +60,61 @@ socket.connect();
 let channel = socket.channel("rooms:lobby", {});
 let tunesContainer = $("#tunes");
 
+function encode(string) {
+  return string.replace(/\w/, "+");
+}
+
+function findVideo(song) {
+  var searchUrl = `/apihelper/youtube/${song.id}`;
+  console.log(">>> findVideo: ", searchUrl);
+  var videoUrl = null;
+  $.ajax({
+    url: searchUrl,
+    type: "GET",
+    async: false,
+    dataType: "json",
+    success: function(data, status, xhr) {
+      console.log(">>> SUCCESS: ", data);
+      console.log(">>> SUCCESS XHR: ", xhr);
+      console.log(">>> SUCCESS STATUS: ", status);
+      videoUrl = data.data;
+    },
+    error: function(xhr, status, error) {
+      console.log(">>> ERROR: ", xhr);
+      console.log(">>> ERROR: ", status);
+      console.log(">>> ERROR: ", error);
+    }
+  });
+  return videoUrl;
+}
+
+function playVideo(song) {
+  var videoSrc = findVideo(song) + "?autoplay=1";
+  var playerFrame = $("iframe#video");
+  if (videoSrc === null) {
+    return null;
+  }
+  if (playerFrame.attr("src") === videoSrc) {
+    return null;
+  }
+
+  $("iframe#video").show();
+  $(".hide-video-link").show();
+  $(".show-video-link").hide();
+  playerFrame.attr("src", videoSrc);
+}
+
 channel.on("new_tune", payload => {
-  console.log("Received:", payload);
-  var tunes = $('.track-item');
-  var tuneCount = tunes.length;
-  console.log("Tune Count:", tuneCount);
-  var newRow = payload["content"];
-  tunesContainer.prepend(`${newRow}`);
-  if (tuneCount > 99) {
+  var tunes = $(".track-item");
+  tunesContainer.prepend(`${payload.content}`);
+  if (tunes.length > 99) {
     tunes.last().remove();
   }
-})
+  playVideo(payload.song);
+});
 
 channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+  .receive("ok", resp => { console.log("Joined successfully", resp); })
+  .receive("error", resp => { console.log("Unable to join", resp); });
 
 export default socket;

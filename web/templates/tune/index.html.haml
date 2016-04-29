@@ -1,4 +1,10 @@
-%h1 Who's Listing to What...
+%h1 Tunedrops...
+
+#currently-playing
+  .video-controls
+    = link("Show Video", to: "#", class: "show-video-link")
+    = link("Hide Video", to: "#", class: "hide-video-link")
+  %iframe#video{width: 426, height: 240, frameborder: 0}
 
 %ul#tunes
   - for tune <- @tunes do

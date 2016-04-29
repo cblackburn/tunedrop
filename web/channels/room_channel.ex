@@ -11,13 +11,14 @@ defmodule Tunedrop.RoomChannel do
   end
 
   def handle_out("new_tune", payload, socket) do
-    push socket, "new_tune", payload
+    push(socket, "new_tune", payload)
     {:noreply, socket}
   end
 
   def broadcast_new_tune(conn, song) do
     payload = %{
-      "content" => Tunedrop.TuneView.tune_link(conn, song) |> Phoenix.HTML.safe_to_string
+      "content" => Tunedrop.TuneView.tune_link(conn, song) |> Phoenix.HTML.safe_to_string,
+      "song" => Tunedrop.TuneView.tune_details(conn, song)
     }
     Tunedrop.Endpoint.broadcast!("rooms:lobby", "new_tune", payload)
     conn

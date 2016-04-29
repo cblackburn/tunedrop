@@ -15,6 +15,10 @@ defmodule Tunedrop.Router do
     plug Tunedrop.ApiAuth, repo: Tunedrop.Repo
   end
 
+  pipeline :apihelper do
+    plug :accepts, ["json"]
+  end
+
   scope "/", Tunedrop do
     pipe_through :browser # Use the default browser stack
 
@@ -32,5 +36,11 @@ defmodule Tunedrop.Router do
     pipe_through [:api, :authenticate_api]
 
     resources "/songs", SongController, only: [:index, :create, :show]
+  end
+
+  scope "/apihelper", Tunedrop do
+    pipe_through [:apihelper]
+
+    resources "/youtube", YoutubeController, only: [:show]
   end
 end

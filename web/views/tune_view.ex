@@ -24,6 +24,16 @@ defmodule Tunedrop.TuneView do
     end
   end
 
+  def tune_details(conn, tune) do
+    %{
+      id: tune.id,
+      artist: tune.artist,
+      track: tune.track,
+      year: tune.year,
+      listend_at: tune.inserted_at
+    }
+  end
+
   def listened_at(%Song{inserted_at: inserted_at}) do
     Timex.Format.DateTime.Formatter.format!(inserted_at, "%B %d @ %H:%M UTC", :strftime)
   end
@@ -69,5 +79,6 @@ defmodule Tunedrop.TuneView do
     string
     |> String.replace(" ", "+")
     |> String.replace("&", "%26")
+    |> String.replace("’", "'")
   end
 end

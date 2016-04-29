@@ -47,6 +47,7 @@ defmodule Tunedrop.Mixfile do
      {:timex_ecto, "~> 1.0.4"},
      {:phoenix_haml, "~> 0.2.1"},
      {:httpotion, "~> 2.2.0"},
+     {:floki, "~> 0.8"},
      {:comeonin, "~> 2.0"}]
   end
 
