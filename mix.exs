@@ -21,7 +21,8 @@ defmodule Tunedrop.Mixfile do
       mod: {Tunedrop, []},
       applications: [
         :phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-        :phoenix_ecto, :postgrex, :comeonin, :timex, :httpotion
+        :phoenix_ecto, :postgrex, :comeonin, :timex, :httpotion,
+        :time_ago_words
       ]
     ]
   end
@@ -45,6 +46,7 @@ defmodule Tunedrop.Mixfile do
      {:secure_random, "~> 0.2"},
      {:timex, "~> 2.1"},
      {:timex_ecto, "~> 1.0.4"},
+     {:time_ago_words, "~> 0.0.1"},
      {:phoenix_haml, "~> 0.2.1"},
      {:httpotion, "~> 2.2.0"},
      {:floki, "~> 0.8"},

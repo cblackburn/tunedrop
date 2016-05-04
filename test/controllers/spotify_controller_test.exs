@@ -1,6 +1,5 @@
 defmodule Tunedrop.SpotifyControllerTest do
   use Tunedrop.ConnCase
-  alias Tunedrop.Song
 
   @song_attrs %{artist: "Pilot", track: "Magic", year: 1967}
 

@@ -1,12 +1,10 @@
 require IEx
 defmodule Tunedrop.TuneView do
   use Tunedrop.Web, :view
-  use Timex
 
   alias Tunedrop.Song
   alias Phoenix.HTML.Tag
   alias Phoenix.HTML.Link
-  alias Tunedrop.TimeHelpers
 
   def tune_link(conn, tune) do
     Tag.content_tag(:li, class: "track-item") do
@@ -24,7 +22,7 @@ defmodule Tunedrop.TuneView do
     end
   end
 
-  def tune_details(conn, tune) do
+  def tune_details(_conn, tune) do
     %{
       id: tune.id,
       artist: tune.artist,
@@ -40,7 +38,7 @@ defmodule Tunedrop.TuneView do
 
   def time_ago(%Song{inserted_at: inserted_at}) do
     Tag.content_tag(:span, class: "time-ago", title: listened_at(%Song{inserted_at: inserted_at})) do
-      TimeHelpers.distance_of_time_in_words(inserted_at) <> " ago"
+      TimeAgoWords.diff(inserted_at)
     end
   end
 

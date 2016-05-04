@@ -32,6 +32,7 @@
   "ranch": {:hex, :ranch, "1.2.1"},
   "secure_random": {:hex, :secure_random, "0.2.0"},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0"},
+  "time_ago_words": {:hex, :time_ago_words, "0.0.1"},
   "timex": {:hex, :timex, "2.1.4"},
   "timex_ecto": {:hex, :timex_ecto, "1.0.4"},
   "tzdata": {:hex, :tzdata, "0.5.7"}}

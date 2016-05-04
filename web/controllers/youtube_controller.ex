@@ -36,15 +36,9 @@ defmodule Tunedrop.YoutubeController do
     end
   end
 
-  @doc """
-  Render a blank video if html is nil
-  """
-  defp extract_song_url_from_youtube_response(html = nil) do
+  defp extract_song_url_from_youtube_response(_html = nil) do
     "https://www.youtube.com/embed/oZPHnVlXcm0"
   end
-  @doc """
-  Extract the first video found and return an embeddable url
-  """
   defp extract_song_url_from_youtube_response(html = _) do
     [_, id] = html
       |> Floki.find("#results a")
