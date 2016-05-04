@@ -9,3 +9,5 @@
 %ul#tunes
   - for tune <- @tunes do
     = render("_tune.html", tune: tune, conn: @conn)
+
+%script{src: "https://www.youtube.com/iframe_api""}

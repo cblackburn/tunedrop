@@ -59,10 +59,9 @@ socket.connect();
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("rooms:lobby", {});
 let tunesContainer = $("#tunes");
-
-function encode(string) {
-  return string.replace(/\w/, "+");
-}
+let playerFrame = $("iframe#video");
+let playerState = null;
+let player = null;
 
 function findVideo(song) {
   var searchUrl = `/apihelper/youtube/${song.id}`;
@@ -88,21 +87,37 @@ function findVideo(song) {
   return videoUrl;
 }
 
+function videoStateChanged(event) {
+  console.log("videoStateChanged", event);
+  playerState = event.data;
+}
+
 function playVideo(song) {
-  var videoSrc = findVideo(song) + "?autoplay=1";
-  var playerFrame = $("iframe#video");
-  if (videoSrc === null) {
+  if (playerState == YT.PlayerState.PLAYING) {
     return null;
   }
+
+  var videoSrc = findVideo(song) + "?autoplay=1&enablejsapi=1";
   if (playerFrame.attr("src") === videoSrc) {
     return null;
   }
 
-  $("iframe#video").show();
+  playerFrame.show();
   $(".hide-video-link").show();
   $(".show-video-link").hide();
   playerFrame.attr("src", videoSrc);
+
+  player = new YT.Player("video", {
+    events: {
+      "onStateChange": videoStateChanged
+    }
+  });
 }
+
+// remove the video on page refresh
+$(document).ready(function() {
+  playerFrame.attr("src", "");
+});
 
 channel.on("new_tune", payload => {
   var tunes = $(".track-item");

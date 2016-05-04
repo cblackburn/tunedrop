@@ -20,7 +20,7 @@ $(".hide-video-link").click(function(e) {
   hideVideo();
 });
 
-$( document ).ready(function() {
+$(document).ready(function() {
   var playerFrame = $("iframe#video");
   if (playerFrame.attr("src") == null) {
     hideVideo();
