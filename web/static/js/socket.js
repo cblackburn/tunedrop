@@ -92,8 +92,8 @@ function videoStateChanged(event) {
   playerState = event.data;
 }
 
-function playVideo(song) {
-  if (playerState == YT.PlayerState.PLAYING) {
+function playVideo(song, force) {
+  if (!force && playerState == YT.PlayerState.PLAYING) {
     return null;
   }
 
@@ -125,7 +125,12 @@ channel.on("new_tune", payload => {
   if (tunes.length > 99) {
     tunes.last().remove();
   }
-  playVideo(payload.song);
+  playVideo(payload.song, false);
+});
+
+$(".track-name").click(function(event) {
+  var song = {"id": $(this).attr("data-item")};
+  playVideo(song, true);
 });
 
 channel.join()

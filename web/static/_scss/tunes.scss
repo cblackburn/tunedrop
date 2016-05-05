@@ -14,3 +14,59 @@ iframe#video {
 .hide-video-link {
   display: none;
 }
+ol, ul {
+  list-style: outside none none;
+}
+.tunes-list {
+  display: block;
+  margin-left: -24px;
+  margin-right: -24px;
+}
+.track-item {
+  box-sizing: border-box;
+  display: inline-block;
+  margin-right: -10px;
+  margin-left: -10px;
+  padding-left: 0;
+  vertical-align: top;
+  width: 100%;
+}
+.track-detail {
+  box-sizing: border-box;
+  display: inline-block;
+  margin-top: 9px;
+  margin-bottom: 9px;
+  margin-right: -0.5em;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+.track-box {
+  box-sizing: border-box;
+  display: inline-block;
+}
+.track-user {
+  width: 50px;
+  margin-right: 10px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #3ff;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+.initials {
+  position: relative;
+  top: 5px;
+  font-size: 50px; /* 50% of parent */
+  line-height: 50px; /* 50% of parent */
+  color: #000;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+}
+.track-info {
+  width: 520px;
+}
+.track-name:hover {
+  background-color: #33f;
+  color: #fff;
+}

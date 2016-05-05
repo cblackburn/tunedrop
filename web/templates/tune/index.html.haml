@@ -6,7 +6,7 @@
     = link("Hide Video", to: "#", class: "hide-video-link")
   %iframe#video{width: 426, height: 240, frameborder: 0}
 
-%ul#tunes
+%ul#tunes.tunes-list
   - for tune <- @tunes do
     = render("_tune.html", tune: tune, conn: @conn)
 

@@ -9,15 +9,19 @@ defmodule Tunedrop.TuneView do
   def tune_link(conn, tune) do
     Tag.content_tag(:li, class: "track-item") do
       [
-        "@#{tune.user.username}" <> " ° ",
-        time_ago(tune),
-        " » " <>
-        tune.artist <> " · " <>
-        tune.track <> " · " <>
-        "#{tune.year} ",
-        Tunedrop.TuneView.youtube_icon_for(tune),
-        Tunedrop.TuneView.amazon_icon_for(tune),
-        Tunedrop.TuneView.spotify_icon_for(conn, tune)
+        content_tag(:ul, class: "track-detail") do
+          [
+            track_user(tune),
+            track_info(conn, tune),
+            content_tag(:span, class: "track-box track-icon-block") do
+              [
+                Tunedrop.TuneView.youtube_icon_for(tune),
+                Tunedrop.TuneView.amazon_icon_for(tune),
+                Tunedrop.TuneView.spotify_icon_for(conn, tune)
+              ]
+            end
+          ]
+        end
       ]
     end
   end
@@ -30,6 +34,35 @@ defmodule Tunedrop.TuneView do
       year: tune.year,
       listend_at: tune.inserted_at
     }
+  end
+
+  def track_user(tune) do
+    initial = tune.user.username |> String.at(0)
+    title = "#{tune.user.username} - #{TimeAgoWords.diff(tune.inserted_at)} ago"
+    content_tag(:li, class: "track-box track-user", title: title) do
+      [
+        content_tag(:span, class: "initials") do
+          initial
+        end
+      ]
+    end
+  end
+
+  def track_info(conn, tune) do
+    Tag.content_tag(:li, class: "track-box track-info") do
+      [
+        tune.artist,
+        Tag.tag(:br),
+        track_tag(conn, tune),
+        " - #{tune.year}"
+      ]
+    end
+  end
+
+  defp track_tag(conn, tune) do
+    content_tag(:span, class: "track-name", data_item: "#{tune.id}", title: "click to play video") do
+      tune.track
+    end
   end
 
   def listened_at(%Song{inserted_at: inserted_at}) do
