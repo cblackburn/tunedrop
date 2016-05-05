@@ -42,11 +42,27 @@ defmodule Tunedrop.YoutubeController do
     "https://www.youtube.com/embed/oZPHnVlXcm0"
   end
   defp extract_song_url_from_youtube_response(html = _) do
-    [_, id] = html
-      |> Floki.find("#results a")
-      |> Floki.attribute("href")
-      |> Enum.find(fn(x) -> x =~ "/watch" end)
-      |> String.split("=")
+    sorted = html
+    |> Floki.find(".yt-lockup-content")
+    |> Enum.sort(fn(item1, item2) -> view_count(item1) > view_count(item2) end)
+
+    [_, id] = Enum.at(sorted, 0)
+    |> Floki.find("h3 > a")
+    |> Floki.attribute("href")
+    |> Enum.find(fn(x) -> x =~ "/watch" end)
+    |> String.split("=")
     "https://www.youtube.com/embed/" <> id
+  end
+
+  defp view_count(item) do
+    meta = item |> Floki.find(".yt-lockup-meta-info > li")
+    views = case Enum.at(meta, 1) do
+      {"li", _, viewlist} ->
+        parts = String.split(Enum.at(viewlist, 0), " ")
+        String.to_integer(String.replace(Enum.at(parts, 0), ",", ""))
+      nil ->
+        # most likely a playlist
+        0
+    end
   end
 end
