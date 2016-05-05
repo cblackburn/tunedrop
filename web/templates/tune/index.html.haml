@@ -1,13 +1,13 @@
 %h1 Tunedrops...
 
 %p
-  New tunes will be posted to the top of the list. Click on the tune name to play the youtube video. Tune videos will automatically play when posted, if nothing is already playing. Hover over tune details to get help on parts that are clickable.
+  The tune list displays the latest 100 tunes being played. New tunes will be posted to the top of the list. Click on the tune name to play the youtube video. Tune videos will automatically play when posted, if nothing is already playing. Hover over tune details to get help on parts that are clickable.
 
 #currently-playing
   .video-controls
     = link("Show Video", to: "#", class: "show-video-link")
     = link("Hide Video", to: "#", class: "hide-video-link")
-  %iframe#video{width: 426, height: 240, frameborder: 0}
+  %iframe#video{width: 426, height: 240, frameborder: 0, webkitallowfullscreen: 1, mozallowfullscreen: 1, allowfullscreen: 1}
 
 %ul#tunes.tunes-list
   - for tune <- @tunes do
