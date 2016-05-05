@@ -23,6 +23,8 @@ defmodule Tunedrop.YoutubeController do
     |> String.replace(" ", "%20")
     |> String.replace("&", "%26")
     |> String.replace("’", "'")
+    |> String.replace("‐", "%2D")
+    |> String.replace("/", "%2F")
   end
 
   defp lookup_song_on_youtube(song) do
