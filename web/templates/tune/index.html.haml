@@ -5,12 +5,16 @@
 
 #currently-playing
   .video-controls
-    = link("Show Video", to: "#", class: "show-video-link")
-    = link("Hide Video", to: "#", class: "hide-video-link")
+    = link("Show Video", to: "#", class: "show-video-link", name: "video-top")
+    = link("Hide Video", to: "#", class: "hide-video-link", name: "video-top")
   %iframe#video{width: 426, height: 240, frameborder: 0, webkitallowfullscreen: 1, mozallowfullscreen: 1, allowfullscreen: 1}
 
 %ul#tunes.tunes-list
   - for tune <- @tunes do
     = render("_tune.html", tune: tune, conn: @conn)
 
-%script{src: "https://www.youtube.com/iframe_api""}
+%script{src: "https://www.youtube.com/iframe_api"}
+
+.loading-indicator{style: "display: none"}
+  .center
+    %img{alt: "", src: "/images/loading.gif"}

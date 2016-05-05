@@ -25,6 +25,7 @@ $(document).ready(function() {
   if (playerFrame.attr("src") == null) {
     hideVideo();
   } else {
+    $(".loading-indicator").hide();
     showVideo();
   }
 });

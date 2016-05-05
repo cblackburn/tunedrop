@@ -59,9 +59,15 @@ socket.connect();
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("rooms:lobby", {});
 let tunesContainer = $("#tunes");
+let loadingIndicator = $(".loading-indicator");
 let playerFrame = $("iframe#video");
 let playerState = null;
 let player = null;
+
+function scrollToAnchor(aid){
+  var aTag = $(`a[name="${aid}"]`);
+  $("html,body").animate({scrollTop: aTag.offset().top}, "slow");
+}
 
 function bindTrackNames() {
   $(".track-name").click(function(event) {
@@ -80,9 +86,6 @@ function findVideo(song) {
     async: false,
     dataType: "json",
     success: function(data, status, xhr) {
-      console.log(">>> SUCCESS: ", data);
-      console.log(">>> SUCCESS XHR: ", xhr);
-      console.log(">>> SUCCESS STATUS: ", status);
       videoUrl = data.data;
     },
     error: function(xhr, status, error) {
@@ -97,6 +100,9 @@ function findVideo(song) {
 function videoStateChanged(event) {
   console.log("videoStateChanged", event);
   playerState = event.data;
+  if (playerState == YT.PlayerState.PLAYING) {
+    loadingIndicator.hide();
+  }
 }
 
 function playVideo(song, force) {
@@ -104,11 +110,14 @@ function playVideo(song, force) {
     return null;
   }
 
+  loadingIndicator.show();
   var videoSrc = findVideo(song) + "?autoplay=1&enablejsapi=1";
   if (playerFrame.attr("src") === videoSrc) {
+    loadingIndicator.hide();
     return null;
   }
 
+  scrollToAnchor("video-top");
   playerFrame.show();
   $(".hide-video-link").show();
   $(".show-video-link").hide();
