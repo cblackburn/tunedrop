@@ -7,12 +7,12 @@ defmodule Tunedrop.TuneView do
   alias Phoenix.HTML.Link
 
   def tune_link(conn, tune) do
-    Tag.content_tag(:li, class: "track-item") do
+    Tag.content_tag(:li, class: "track-item", id: "track-#{tune.id}") do
       [
         content_tag(:ul, class: "track-detail") do
           [
             track_user(tune),
-            track_info(conn, tune),
+            track_info(tune),
             content_tag(:span, class: "track-box track-icon-block") do
               [
                 Tunedrop.TuneView.youtube_icon_for(tune),
@@ -48,18 +48,18 @@ defmodule Tunedrop.TuneView do
     end
   end
 
-  def track_info(conn, tune) do
+  def track_info(tune) do
     Tag.content_tag(:li, class: "track-box track-info") do
       [
         tune.artist,
         Tag.tag(:br),
-        track_tag(conn, tune),
+        track_tag(tune),
         " - #{tune.year}"
       ]
     end
   end
 
-  defp track_tag(conn, tune) do
+  defp track_tag(tune) do
     content_tag(:span, class: "track-name", data_item: "#{tune.id}", title: "click to play video") do
       tune.track
     end

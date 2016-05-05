@@ -18,5 +18,6 @@ import "phoenix_html";
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
+import "./jquery-ui.min";
 import "./tunes";
 import socket from "./socket";

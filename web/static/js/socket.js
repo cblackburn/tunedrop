@@ -63,6 +63,13 @@ let playerFrame = $("iframe#video");
 let playerState = null;
 let player = null;
 
+function bindTrackNames() {
+  $(".track-name").click(function(event) {
+    var song = {"id": $(this).attr("data-item")};
+    playVideo(song, true);
+  });
+}
+
 function findVideo(song) {
   var searchUrl = `/apihelper/youtube/${song.id}`;
   console.log(">>> findVideo: ", searchUrl);
@@ -119,18 +126,20 @@ $(document).ready(function() {
   playerFrame.attr("src", "");
 });
 
+function fadeInTrack(track) {
+  track.switchClass("track-item", "new-track-item", 1);
+  track.switchClass("new-track-item", "track-item", 1000, "easeInOutCubic");
+}
+
 channel.on("new_tune", payload => {
   var tunes = $(".track-item");
   tunesContainer.prepend(`${payload.content}`);
   if (tunes.length > 99) {
     tunes.last().remove();
   }
+  fadeInTrack($(`#track-${payload.song.id}`));
+  bindTrackNames();
   playVideo(payload.song, false);
-});
-
-$(".track-name").click(function(event) {
-  var song = {"id": $(this).attr("data-item")};
-  playVideo(song, true);
 });
 
 channel.join()
@@ -138,3 +147,4 @@ channel.join()
   .receive("error", resp => { console.log("Unable to join", resp); });
 
 export default socket;
+bindTrackNames();

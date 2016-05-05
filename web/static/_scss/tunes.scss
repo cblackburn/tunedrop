@@ -22,6 +22,16 @@ ol, ul {
   margin-left: -24px;
   margin-right: -24px;
 }
+.new-track-item {
+  box-sizing: border-box;
+  display: inline-block;
+  margin-right: -10px;
+  margin-left: -10px;
+  padding-left: 0;
+  background-color: #49255A;
+  vertical-align: top;
+  width: 100%;
+}
 .track-item {
   box-sizing: border-box;
   display: inline-block;
@@ -50,7 +60,7 @@ ol, ul {
   margin-right: 10px;
   text-align: center;
   border-radius: 50%;
-  background-color: #3ff;
+  background-color: #49255A;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
 }
@@ -59,7 +69,7 @@ ol, ul {
   top: 0;
   font-size: 50px; /* 50% of parent */
   line-height: 50px; /* 50% of parent */
-  color: #000;
+  color: #fff;
   font-family: "Courier New", monospace;
   font-weight: bold;
 }
@@ -67,6 +77,6 @@ ol, ul {
   width: 520px;
 }
 .track-name:hover {
-  background-color: #33f;
+  background-color: #49255A;
   color: #fff;
 }
