@@ -39,7 +39,7 @@ defmodule Tunedrop.YoutubeController do
   end
 
   defp extract_song_url_from_youtube_response(_html = nil) do
-    "https://www.youtube.com/embed/oZPHnVlXcm0"
+    "https://www.youtube.com/embed/U-pyNeUDCQ4"
   end
   defp extract_song_url_from_youtube_response(html = _) do
     sorted = html

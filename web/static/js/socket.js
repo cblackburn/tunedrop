@@ -64,9 +64,10 @@ let playerFrame = $("iframe#video");
 let playerState = null;
 let player = null;
 
-function scrollToAnchor(aid){
-  var aTag = $(`a[name="${aid}"]`);
-  $("html,body").animate({scrollTop: aTag.offset().top}, "slow");
+function scrollToDiv(id){
+  $("html, body").animate({
+    scrollTop: $("#currently-playing").offset().top
+  }, "slow");
 }
 
 function bindTrackNames() {
@@ -101,7 +102,7 @@ function videoStateChanged(event) {
   console.log("videoStateChanged", event);
   playerState = event.data;
   if (playerState == YT.PlayerState.PLAYING) {
-    loadingIndicator.hide();
+    hideLoading();
   }
 }
 
@@ -110,14 +111,14 @@ function playVideo(song, force) {
     return null;
   }
 
-  loadingIndicator.show();
+  showLoading();
   var videoSrc = findVideo(song) + "?autoplay=1&enablejsapi=1";
   if (playerFrame.attr("src") === videoSrc) {
-    loadingIndicator.hide();
+    hideLoading();
     return null;
   }
 
-  scrollToAnchor("video-top");
+  scrollToDiv("video-top");
   playerFrame.show();
   $(".hide-video-link").show();
   $(".show-video-link").hide();
@@ -138,6 +139,15 @@ $(document).ready(function() {
 function fadeInTrack(track) {
   track.switchClass("track-item", "new-track-item", 1);
   track.switchClass("new-track-item", "track-item", 1000, "easeInOutCubic");
+}
+
+function showLoading() {
+  loadingIndicator.show();
+  setTimeout(hideLoading, 4000);
+}
+
+function hideLoading() {
+  loadingIndicator.hide();
 }
 
 channel.on("new_tune", payload => {
