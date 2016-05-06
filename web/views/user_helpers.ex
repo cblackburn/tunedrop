@@ -3,9 +3,9 @@ defmodule Tunedrop.UserHelpers do
   Shared helpers for user related things.
   """
 
-  alias Tunedrop.User
-
   use Phoenix.HTML
+
+  alias Tunedrop.User
 
   def display_name(nil) do
     "unregistered"

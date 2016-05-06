@@ -21,6 +21,7 @@ defmodule Tunedrop.User do
     |> validate_length(:username, min: 5, max: 20)
     |> validate_length(:email, min: 6, max: 255)
     |> validate_format(:email, ~r/\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
+    |> unique_constraint(:email)
   end
 
   @doc """

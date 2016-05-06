@@ -12,14 +12,8 @@ defmodule Tunedrop.SpotifyController do
 
   defp spotify_url(%{artist: artist, track: track, year: _year}) do
     "https://api.spotify.com/v1/search" <>
-      "?q=track:#{encode(track)}%20artist:#{encode(artist)}" <>
+      "?q=track:#{ControllerHelpers.encode_string(track)}%20artist:#{ControllerHelpers.encode_string(artist)}" <>
       "&type=track"
-  end
-
-  defp encode(string) do
-    string
-    |> String.replace(" ", "%20")
-    |> String.replace("&", "%26")
   end
 
   defp lookup_song_on_spotify(song) do

@@ -23,8 +23,4 @@ defmodule Tunedrop.RoomChannel do
     Tunedrop.Endpoint.broadcast!("rooms:lobby", "new_tune", payload)
     conn
   end
-
-  defp javascript_datetime(datetime) do
-    Timex.Format.DateTime.Formatter.format!(datetime, "%m/%d %H:%M", :strftime)
-  end
 end

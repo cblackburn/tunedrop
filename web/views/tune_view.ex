@@ -1,8 +1,6 @@
-require IEx
 defmodule Tunedrop.TuneView do
   use Tunedrop.Web, :view
 
-  alias Tunedrop.Song
   alias Phoenix.HTML.Tag
   alias Phoenix.HTML.Link
 
@@ -36,45 +34,6 @@ defmodule Tunedrop.TuneView do
     }
   end
 
-  def track_user(tune) do
-    initial = tune.user.username |> String.at(0)
-    title = "#{tune.user.username} - #{TimeAgoWords.diff(tune.inserted_at)} ago"
-    content_tag(:li, class: "track-box track-user", title: title) do
-      [
-        content_tag(:span, class: "initials") do
-          initial
-        end
-      ]
-    end
-  end
-
-  def track_info(tune) do
-    Tag.content_tag(:li, class: "track-box track-info") do
-      [
-        tune.artist,
-        Tag.tag(:br),
-        track_tag(tune),
-        " - #{tune.year}"
-      ]
-    end
-  end
-
-  defp track_tag(tune) do
-    content_tag(:span, class: "track-name", data_item: "#{tune.id}", title: "click to play video") do
-      tune.track
-    end
-  end
-
-  def listened_at(%Song{inserted_at: inserted_at}) do
-    Timex.Format.DateTime.Formatter.format!(inserted_at, "%B %d @ %H:%M UTC", :strftime)
-  end
-
-  def time_ago(%Song{inserted_at: inserted_at}) do
-    Tag.content_tag(:span, class: "time-ago", title: listened_at(%Song{inserted_at: inserted_at})) do
-      TimeAgoWords.diff(inserted_at)
-    end
-  end
-
   def youtube_icon_for(tune) do
     Link.link(to: youtube_url(tune), target: "_tunedrop", title: "Find on Youtube.") do
       Tag.tag(:img, class: "track-icon", src: "/images/yt.png")
@@ -94,22 +53,46 @@ defmodule Tunedrop.TuneView do
   end
 
   def youtube_url(%{artist: artist, track: track}) do
-    artist = encode(artist)
-    track = encode(track)
+    artist = ControllerHelpers.encode_string(artist)
+    track = ControllerHelpers.encode_string(track)
     "https://www.youtube.com/results?search_query=#{artist}+#{track}"
   end
 
   def amazon_url(%{artist: artist, track: track}) do
     #"http://www.amazon.com/gp/search?ie=UTF8&camp=1789&creative=9325&index=aps&keywords=tony+robbins&linkCode=ur2&tag=YOUR-ID-20"
-    artist = encode(artist)
-    track = encode(track)
+    artist = ControllerHelpers.encode_string(artist)
+    track = ControllerHelpers.encode_string(track)
     "http://www.amazon.com/s/ref=as_li_ss_tl?url=search-alias%3Daps&field-keywords=#{artist}+-+#{track}&rh=i%3Aaps%2Ck%3A#{artist}+-+#{track}&linkCode=ll2&tag=midwirtechno-20"
   end
 
-  defp encode(string) do
-    string
-    |> String.replace(" ", "+")
-    |> String.replace("&", "%26")
-    |> String.replace("’", "'")
+  # private
+
+  defp track_user(tune) do
+    initial = tune.user.username |> String.at(0)
+    title = "#{tune.user.username} - #{TimeAgoWords.diff(tune.inserted_at)} ago"
+    content_tag(:li, class: "track-box track-user", title: title) do
+      [
+        content_tag(:span, class: "initials") do
+          initial
+        end
+      ]
+    end
+  end
+
+  defp track_info(tune) do
+    Tag.content_tag(:li, class: "track-box track-info") do
+      [
+        tune.artist,
+        Tag.tag(:br),
+        track_tag(tune),
+        " - #{tune.year}"
+      ]
+    end
+  end
+
+  defp track_tag(tune) do
+    content_tag(:span, class: "track-name", data_item: "#{tune.id}", title: "click to play video") do
+      tune.track
+    end
   end
 end

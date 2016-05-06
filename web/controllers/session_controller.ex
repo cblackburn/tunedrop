@@ -21,6 +21,7 @@ defmodule Tunedrop.SessionController do
   def delete(conn, _) do
     conn
     |> Tunedrop.Auth.logout()
+    |> put_flash(:info, "Logged out.")
     |> redirect(to: tune_path(conn, :index))
   end
 end
